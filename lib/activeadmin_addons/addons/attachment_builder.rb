@@ -48,7 +48,7 @@ module ActiveAdminAddons
       return nil if file.blank?
       raise 'you need to pass a paperclip attribute' unless file.respond_to?(:url)
       options[:truncate] = options.fetch(:truncate, true)
-      return nil unless file.file?
+      return nil unless file.exists?
       context.link_to(build_label, file.url, target: "_blank", class: "attachment-link")
     end
 
