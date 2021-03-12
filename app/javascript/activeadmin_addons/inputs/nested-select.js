@@ -69,6 +69,7 @@ var initializer = function() {
       var url = element.data('url');
       var fields = element.data('fields');
       var predicate = element.data('predicate');
+      var filters = element.data('filters');
       var displayName = element.data('display-name');
       var parent = element.data('parent');
       var width = element.data('width');
@@ -117,6 +118,8 @@ var initializer = function() {
               query.q[parent + '_eq'] = parentId;
             }
 
+            Object.assign(query.q, filters);
+
             return query;
           },
           processResults: function(data) {
@@ -151,6 +154,9 @@ var initializer = function() {
 
       if (!!parent) {
         var parentSelectorId = '#' + model + '_' + parent;
+        if (!$(parentSelectorId).length) {
+          parentSelectorId = $(container).find('*[id*=' + parent + ']')[0];
+        }
         var parentSelector = $(parentSelectorId)[0];
 
         $(parentSelector).on('select2:select', setParentValue);
